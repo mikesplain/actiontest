@@ -1,6 +1,6 @@
-FROM: ubuntu
+FROM ubuntu
 
-RUN: apt-get update && \
+RUN apt-get update && \
      apt-get install -yq \
       dnsutils \
       curl \
