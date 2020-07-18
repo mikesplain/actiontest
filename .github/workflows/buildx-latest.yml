@@ -50,13 +50,17 @@ jobs:
           echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin docker.pkg.github.com
 
       -
-        name: Run Buildx (push)
-        run: |
-          docker buildx build \
-            --platform linux/amd64 \
-            --cache-from "type=local,src=/tmp/.buildx-cache" \
-            --cache-to "type=local,dest=/tmp/.buildx-cache" \
-            --output "type=image,push=true" \
-            --tag docker.pkg.github.com/mikesplain/actiontest/image2:latest \
-            --file ./Dockerfile .
+         name: Push
+         run: |
+           docker push docker.pkg.github.com/mikesplain/actiontest/image2:latest
+#       -
+#         name: Run Buildx (push)
+#         run: |
+#           docker buildx build \
+#             --platform linux/amd64 \
+#             --cache-from "type=local,src=/tmp/.buildx-cache" \
+#             --cache-to "type=local,dest=/tmp/.buildx-cache" \
+#             --output "type=image,push=true" \
+#             --tag docker.pkg.github.com/mikesplain/actiontest/image2:latest \
+#             --file ./Dockerfile .
 
