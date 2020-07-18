@@ -44,7 +44,7 @@ jobs:
       -
         name: Docker Login
         env:
-          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_USERNAME: $GITHUB_ACTOR
           DOCKER_PASSWORD: ${{secrets.GITHUB_TOKEN}}
         run: |
           echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin docker.pkg.github.com
