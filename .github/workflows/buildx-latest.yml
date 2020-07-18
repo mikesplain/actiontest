@@ -30,16 +30,33 @@ jobs:
       -
         name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
-      #- name: Dockerhub login
-      #  run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u bee --password-stdin 2>&1
+
       -
-        name: Run Buildx
+        name: Run Buildx (build)
         run: |
           docker buildx build \
             --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
             --cache-from "type=local,src=/tmp/.buildx-cache" \
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
             --output "type=image,push=false" \
-            --tag mikesplain/actiontest:latest \
+            --tag docker.pkg.github.com/mikesplain/actiontest/image:latest \
+            --file ./Dockerfile .
+      -
+        name: Docker Login
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_PASSWORD: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+
+      -
+        name: Run Buildx (push)
+        run: |
+          docker buildx build \
+            --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
+            --cache-from "type=local,src=/tmp/.buildx-cache" \
+            --cache-to "type=local,dest=/tmp/.buildx-cache" \
+            --output "type=image,push=true" \
+            --tag docker.pkg.github.com/mikesplain/actiontest/image:latest \
             --file ./Dockerfile .
 
