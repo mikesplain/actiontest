@@ -39,7 +39,7 @@ jobs:
             --cache-from "type=local,src=/tmp/.buildx-cache" \
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
             --output "type=image,push=false" \
-            --tag docker.pkg.github.com/mikesplain/actiontest/image:latest \
+            --tag docker.pkg.github.com/mikesplain/actiontest/image2:latest \
             --file ./Dockerfile .
       -
         name: Docker Login
@@ -57,6 +57,6 @@ jobs:
             --cache-from "type=local,src=/tmp/.buildx-cache" \
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
             --output "type=image,push=true" \
-            --tag docker.pkg.github.com/mikesplain/actiontest/image:latest \
+            --tag docker.pkg.github.com/mikesplain/actiontest/image2:latest \
             --file ./Dockerfile .
 
